@@ -121,10 +121,9 @@
     }
     /* EDIT: Top-left logo text */
     .logo {
-      font-family: var(--font-head); font-size: 1.05rem;
+      font-family: var(--font-head); font-size: 0.9rem;
       font-weight: 700; letter-spacing: -0.02em; color: var(--text);
     }
-    .logo em { color: var(--accent); font-style: normal; }
     .nav-links {
       display: flex; gap: 28px;
     }
@@ -333,20 +332,6 @@
       box-shadow: 0 18px 36px rgba(0,0,0,0.45);
     }
 
-    /* EDIT: Replace .thumb with <img src="..." class="thumb"> per project */
-    .thumb {
-      width: 100%; height: 172px;
-      background: linear-gradient(135deg, var(--surface-2) 0%, rgba(88,166,255,0.05) 100%);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 2.2rem; position: relative; overflow: hidden;
-    }
-    .thumb::after {
-      content: ''; position: absolute; inset: 0;
-      background: repeating-linear-gradient(
-        45deg, transparent, transparent 7px,
-        rgba(88,166,255,0.018) 7px, rgba(88,166,255,0.018) 14px
-      );
-    }
     .card-body { padding: 22px; flex: 1; display: flex; flex-direction: column; }
     .card-title {
       font-family: var(--font-head); font-size: 1.05rem; font-weight: 600;
@@ -398,7 +383,11 @@
        Edit .timeline-item blocks — add or remove as needed
        ============================================================ */
     #experience { padding: 96px 0; }
-    .timeline { position: relative; margin-top: 52px; }
+    .exp-grid {
+      display: grid; grid-template-columns: 1fr 300px;
+      gap: 48px; align-items: center; margin-top: 52px;
+    }
+    .timeline { position: relative; }
     .timeline::before {
       content: ''; position: absolute; left: 0; top: 8px; bottom: 0;
       width: 1px;
@@ -434,8 +423,8 @@
     /* Education card */
     .edu-card {
       display: flex; align-items: flex-start; gap: 18px;
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 22px; margin-top: 52px;
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 22px;
       transition: border-color 0.25s var(--ease);
     }
     .edu-card:hover { border-color: var(--accent-border); }
@@ -532,6 +521,7 @@
       .hero-intro { margin: 0 auto 36px; }
       .hero-ctas { justify-content: center; }
       .about-grid { grid-template-columns: 1fr; gap: 44px; }
+      .exp-grid { grid-template-columns: 1fr; }
       .skills-grid { grid-template-columns: 1fr; gap: 0; }
       .contact-grid { grid-template-columns: 1fr; gap: 44px; }
       .form-row { grid-template-columns: 1fr; }
@@ -555,14 +545,14 @@
   <nav id="nav">
     <div class="nav-wrap">
       <!-- EDIT: Logo in top-left -->
-      <a href="#hero" class="logo">HR<em>.</em></a>
+      <a href="#hero" class="logo">Hudaifa Rehman</a>
 
       <ul class="nav-links" id="navLinks">
         <!-- EDIT: Nav items — keep href="#id" matching section IDs below -->
         <li><a href="#about">About</a></li>
+        <li><a href="#experience">Experience</a></li>
         <li><a href="#projects">Projects</a></li>
         <li><a href="#skills">Skills</a></li>
-        <li><a href="#experience">Experience</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
 
@@ -574,9 +564,9 @@
     <div class="mobile-nav" id="mobileNav">
       <!-- EDIT: Mobile nav links (keep in sync with desktop nav above) -->
       <a href="#about">About</a>
+      <a href="#experience">Experience</a>
       <a href="#projects">Projects</a>
       <a href="#skills">Skills</a>
-      <a href="#experience">Experience</a>
       <a href="#contact">Contact</a>
     </div>
   </nav>
@@ -618,7 +608,7 @@
 
         <!-- EDIT: Replace "headshot.jpg" with your photo filename -->
         <div class="photo-ring fi">
-          <img src="headshot.jpg" alt="Hudaifa Rehman" class="hero-photo" />
+          <img src="headshot_cropped.jpg" alt="Hudaifa Rehman" class="hero-photo" />
         </div>
 
       </div>
@@ -682,9 +672,90 @@
           <div class="fact">Based in Dallas, TX</div>                      <!-- EDIT: Location -->
           <div class="fact">Obsessed with finance &amp; technology</div>
           <div class="fact">Open to consulting &amp; PM roles</div>
+
+          <!-- EDIT: "Why Choose Me" bullets — add or remove .fact items freely -->
+          <p class="facts-title" style="margin-top:24px;">Why Choose Me</p>
+          <div class="fact">I think like an engineer and communicate like a strategist</div>
+          <div class="fact">End-to-end ownership — discovery to launch</div>
+          <div class="fact">10+ years of code means I never lose engineers in translation</div>
+          <div class="fact">FinTech isn't a pivot — it's always been the goal</div>
         </div>
 
       </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       EXPERIENCE SECTION
+       Edit each .tl-item block — add or remove as needed
+       ============================================================ -->
+  <section id="experience">
+    <div class="container">
+      <div class="fi">
+        <p class="label">Background</p>
+        <!-- EDIT: Experience section heading -->
+        <h2 class="section-title">Experience</h2>
+      </div>
+
+      <div class="exp-grid">
+
+        <div class="timeline">
+
+          <!-- ── ROLE 1 (most recent first) ── -->
+          <div class="tl-item fi d1">
+            <div class="tl-dot"></div>
+            <p class="tl-date">2024 — Present</p>              <!-- EDIT: Date range -->
+            <p class="tl-role">Role / Title Here</p>           <!-- EDIT: Job title -->
+            <p class="tl-company">Company Name</p>             <!-- EDIT: Company -->
+            <ul class="tl-desc">
+              <!-- EDIT: Bullet points — add or remove <li> items -->
+              <li>What you owned, built, or shipped in this role</li>
+              <li>Key outcome or metric you drove</li>
+              <li>Technologies or stakeholders you worked with</li>
+            </ul>
+          </div>
+
+          <!-- ── ROLE 2 ── -->
+          <div class="tl-item fi d2">
+            <div class="tl-dot"></div>
+            <p class="tl-date">2023 — 2024</p>                 <!-- EDIT: Date range -->
+            <p class="tl-role">Role / Title Here</p>
+            <p class="tl-company">Company Name</p>
+            <ul class="tl-desc">
+              <li>What you owned, built, or shipped in this role</li>
+              <li>Key outcome or metric you drove</li>
+              <li>Collaboration with engineers, stakeholders, or clients</li>
+            </ul>
+          </div>
+
+          <!-- ── ROLE 3 ── duplicate this block to add more ── -->
+          <div class="tl-item fi d3">
+            <div class="tl-dot"></div>
+            <p class="tl-date">2022 — 2023</p>
+            <p class="tl-role">Role / Title Here</p>
+            <p class="tl-company">Company Name</p>
+            <ul class="tl-desc">
+              <li>What you owned, built, or shipped in this role</li>
+              <li>Key outcome or metric you drove</li>
+            </ul>
+          </div>
+
+        </div><!-- /timeline -->
+
+        <!-- EDIT: Education card — sits right of timeline on desktop -->
+        <div class="edu-card fi">
+          <div class="edu-icon">🎓</div>
+          <div>
+            <!-- EDIT: School name -->
+            <p class="edu-school">The University of Texas at Dallas</p>
+            <!-- EDIT: Degree, major, and expected graduation date -->
+            <p class="edu-deg">B.S. Finance (FinTech Concentration) · Expected May 2026</p>
+          </div>
+        </div>
+
+      </div><!-- /exp-grid -->
+
     </div>
   </section>
 
@@ -710,8 +781,6 @@
 
         <!-- ── PROJECT 1 ── EDIT: All fields below ── -->
         <div class="card fi d1">
-          <!-- EDIT: Swap .thumb for <img src="project1.jpg" alt="..." class="thumb"> -->
-          <div class="thumb">📊</div>                  <!-- EDIT: Emoji placeholder -->
           <div class="card-body">
             <h3 class="card-title">Project Name Here</h3>     <!-- EDIT: Project title -->
             <!-- EDIT: 1-2 sentence description -->
@@ -729,7 +798,6 @@
 
         <!-- ── PROJECT 2 ── EDIT: All fields below ── -->
         <div class="card fi d2">
-          <div class="thumb">🤖</div>                  <!-- EDIT: Emoji or swap for <img> -->
           <div class="card-body">
             <h3 class="card-title">Project Name Here</h3>
             <p class="card-desc">Short description of what this project is, the problem it solves, and your role in building or shipping it.</p>
@@ -744,7 +812,6 @@
 
         <!-- ── PROJECT 3 ── EDIT: All fields below ── -->
         <div class="card fi d3">
-          <div class="thumb">📋</div>
           <div class="card-body">
             <h3 class="card-title">Project Name Here</h3>
             <p class="card-desc">Short description of what this project is, the problem it solves, and your role in building or shipping it.</p>
@@ -759,7 +826,6 @@
 
         <!-- ── PROJECT 4 ── EDIT: All fields below ── -->
         <div class="card fi d4">
-          <div class="thumb">💳</div>
           <div class="card-body">
             <h3 class="card-title">Project Name Here</h3>
             <p class="card-desc">Short description of what this project is, the problem it solves, and your role in building or shipping it.</p>
@@ -845,76 +911,6 @@
         </div>
 
       </div>
-    </div>
-  </section>
-
-
-  <!-- ============================================================
-       EXPERIENCE SECTION
-       Edit each .tl-item block — add or remove as needed
-       ============================================================ -->
-  <section id="experience">
-    <div class="container">
-      <div class="fi">
-        <p class="label">Background</p>
-        <!-- EDIT: Experience section heading -->
-        <h2 class="section-title">Experience</h2>
-      </div>
-
-      <div class="timeline">
-
-        <!-- ── ROLE 1 (most recent first) ── -->
-        <div class="tl-item fi d1">
-          <div class="tl-dot"></div>
-          <p class="tl-date">2024 — Present</p>              <!-- EDIT: Date range -->
-          <p class="tl-role">Role / Title Here</p>           <!-- EDIT: Job title -->
-          <p class="tl-company">Company Name</p>             <!-- EDIT: Company -->
-          <ul class="tl-desc">
-            <!-- EDIT: Bullet points — add or remove <li> items -->
-            <li>What you owned, built, or shipped in this role</li>
-            <li>Key outcome or metric you drove</li>
-            <li>Technologies or stakeholders you worked with</li>
-          </ul>
-        </div>
-
-        <!-- ── ROLE 2 ── -->
-        <div class="tl-item fi d2">
-          <div class="tl-dot"></div>
-          <p class="tl-date">2023 — 2024</p>                 <!-- EDIT: Date range -->
-          <p class="tl-role">Role / Title Here</p>
-          <p class="tl-company">Company Name</p>
-          <ul class="tl-desc">
-            <li>What you owned, built, or shipped in this role</li>
-            <li>Key outcome or metric you drove</li>
-            <li>Collaboration with engineers, stakeholders, or clients</li>
-          </ul>
-        </div>
-
-        <!-- ── ROLE 3 ── duplicate this block to add more ── -->
-        <div class="tl-item fi d3">
-          <div class="tl-dot"></div>
-          <p class="tl-date">2022 — 2023</p>
-          <p class="tl-role">Role / Title Here</p>
-          <p class="tl-company">Company Name</p>
-          <ul class="tl-desc">
-            <li>What you owned, built, or shipped in this role</li>
-            <li>Key outcome or metric you drove</li>
-          </ul>
-        </div>
-
-      </div><!-- /timeline -->
-
-      <!-- EDIT: Education block -->
-      <div class="edu-card fi">
-        <div class="edu-icon">🎓</div>
-        <div>
-          <!-- EDIT: School name -->
-          <p class="edu-school">The University of Texas at Dallas</p>
-          <!-- EDIT: Degree, major, and expected graduation date -->
-          <p class="edu-deg">B.S. Finance (FinTech Concentration) · Expected May 2026</p>
-        </div>
-      </div>
-
     </div>
   </section>
 
