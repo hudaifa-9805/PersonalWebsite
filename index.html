@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- EDIT: Page title shown in the browser tab -->
+  <title>Hudaifa Rehman — FinTech & Product</title>
+  <meta name="description" content="Hudaifa Rehman — Finance & FinTech student at UT Dallas. Building products at the intersection of finance and technology." />
+
+  <!-- Google Fonts: Space Grotesk (headings) + Outfit (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       DESIGN TOKENS — Edit ALL colors and fonts here only
+       ============================================================ */
+    :root {
+      --bg:            #0D1117;                        /* EDIT: Page background */
+      --surface:       #161B22;                        /* EDIT: Card / panel background */
+      --surface-2:     #1C2128;                        /* EDIT: Secondary surface */
+      --text:          #F0F6FC;                        /* EDIT: Primary text */
+      --muted:         #8B949E;                        /* EDIT: Secondary / muted text */
+      --accent:        #58A6FF;                        /* EDIT: Accent blue */
+      --accent-glow:   rgba(88,166,255,0.12);          /* EDIT: Accent glow wash */
+      --accent-border: rgba(88,166,255,0.22);          /* EDIT: Accent border */
+      --border:        #30363D;                        /* EDIT: Subtle border */
+      --radius:        12px;                           /* EDIT: Card corner radius */
+      --font-head:     'Space Grotesk', sans-serif;    /* EDIT: Heading font */
+      --font-body:     'Outfit', sans-serif;           /* EDIT: Body font */
+      --ease:          cubic-bezier(0.4,0,0.2,1);
+    }
+
+    /* ── Reset ─────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    ul { list-style: none; }
+
+    /* ── Custom scrollbar ───────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+    ::selection { background: var(--accent-glow); color: var(--accent); }
+
+    /* ── Layout helpers ─────────────────────────────────────────── */
+    .container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+    section { padding: 96px 0; }
+
+    /* ── Section typography ─────────────────────────────────────── */
+    .label {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 10px;
+    }
+    .section-title {
+      font-family: var(--font-head);
+      font-size: clamp(1.9rem,3.8vw,2.6rem);
+      font-weight: 700; line-height: 1.12; letter-spacing: -0.02em;
+      color: var(--text); margin-bottom: 14px;
+    }
+    .section-sub {
+      font-size: 0.975rem; color: var(--muted); max-width: 500px; line-height: 1.75;
+    }
+
+    /* ── Scroll fade-in ─────────────────────────────────────────── */
+    .fi {
+      opacity: 0; transform: translateY(22px);
+      transition: opacity 0.55s var(--ease), transform 0.55s var(--ease);
+    }
+    .fi.show { opacity: 1; transform: none; }
+    .d1 { transition-delay: 0.08s; }
+    .d2 { transition-delay: 0.16s; }
+    .d3 { transition-delay: 0.24s; }
+    .d4 { transition-delay: 0.32s; }
+    .d5 { transition-delay: 0.40s; }
+
+    /* ── Buttons ────────────────────────────────────────────────── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--font-body); font-size: 0.88rem; font-weight: 600;
+      padding: 11px 24px; border-radius: 8px; border: none;
+      cursor: pointer; transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
+      text-decoration: none;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary {
+      background: var(--accent); color: #0D1117;
+    }
+    .btn-primary:hover { box-shadow: 0 8px 22px rgba(88,166,255,0.32); background: #79B8FF; }
+    .btn-outline {
+      background: transparent; color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--accent); background: var(--accent-glow); color: var(--accent); }
+
+    /* ============================================================
+       NAVIGATION
+       ============================================================ */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 900;
+      transition: background 0.3s var(--ease), border-color 0.3s var(--ease);
+    }
+    nav.stuck {
+      background: rgba(13,17,23,0.88);
+      backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-wrap {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 62px; max-width: 1080px; margin: 0 auto; padding: 0 24px;
+    }
+    /* EDIT: Top-left logo text */
+    .logo {
+      font-family: var(--font-head); font-size: 1.05rem;
+      font-weight: 700; letter-spacing: -0.02em; color: var(--text);
+    }
+    .logo em { color: var(--accent); font-style: normal; }
+    .nav-links {
+      display: flex; gap: 28px;
+    }
+    .nav-links a {
+      font-size: 0.85rem; font-weight: 500; color: var(--muted);
+      position: relative; transition: color 0.2s;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -3px; left: 0;
+      width: 0; height: 1.5px; background: var(--accent);
+      transition: width 0.25s var(--ease);
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); }
+    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+
+    /* Mobile hamburger */
+    .burger {
+      display: none; flex-direction: column; gap: 5px;
+      cursor: pointer; padding: 4px; background: none; border: none;
+    }
+    .burger span {
+      display: block; width: 21px; height: 2px;
+      background: var(--text); border-radius: 2px;
+      transition: transform 0.25s var(--ease), opacity 0.25s;
+    }
+    .burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .burger.open span:nth-child(2) { opacity: 0; }
+    .burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-nav {
+      display: none; flex-direction: column; gap: 0;
+      background: rgba(13,17,23,0.97); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .mobile-nav a {
+      font-size: 0.95rem; font-weight: 500; color: var(--muted);
+      padding: 14px 24px; border-bottom: 1px solid var(--border);
+      transition: color 0.2s, background 0.2s;
+    }
+    .mobile-nav a:hover { color: var(--text); background: var(--surface); }
+    .mobile-nav.open { display: flex; }
+
+    /* ============================================================
+       HERO SECTION
+       Edit name, title, intro text, and CTA buttons below
+       ============================================================ */
+    #hero {
+      min-height: 100vh; display: flex; align-items: center;
+      padding: 110px 0 72px; position: relative; overflow: hidden;
+    }
+    /* Subtle grid overlay */
+    #hero::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(88,166,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(88,166,255,0.025) 1px, transparent 1px);
+      background-size: 56px 56px;
+    }
+    /* Radial glow top-right */
+    #hero::after {
+      content: ''; position: absolute; top: -180px; right: -80px;
+      width: 560px; height: 560px; pointer-events: none;
+      background: radial-gradient(circle, rgba(88,166,255,0.07) 0%, transparent 68%);
+    }
+    .hero-grid {
+      display: grid; grid-template-columns: 1fr auto;
+      gap: 56px; align-items: center; width: 100%;
+    }
+
+    /* Animated badge */
+    .badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.73rem; font-weight: 600; letter-spacing: 0.11em;
+      text-transform: uppercase; color: var(--accent);
+      background: var(--accent-glow); border: 1px solid var(--accent-border);
+      border-radius: 100px; padding: 5px 14px; margin-bottom: 22px;
+    }
+    .badge::before {
+      content: ''; width: 7px; height: 7px; border-radius: 50%;
+      background: var(--accent); animation: blink 2s ease-in-out infinite;
+    }
+    @keyframes blink {
+      0%,100% { opacity:1; transform:scale(1); }
+      50%      { opacity:0.4; transform:scale(0.75); }
+    }
+
+    /* EDIT: Your full name */
+    .hero-name {
+      font-family: var(--font-head);
+      font-size: clamp(2.8rem,5.6vw,4.8rem);
+      font-weight: 700; line-height: 1.04;
+      letter-spacing: -0.03em; color: var(--text);
+      margin-bottom: 14px;
+    }
+
+    /* EDIT: Role / title under name */
+    .hero-role {
+      font-family: var(--font-head);
+      font-size: clamp(0.95rem,1.6vw,1.1rem);
+      font-weight: 400; color: var(--muted); margin-bottom: 22px; line-height: 1.55;
+    }
+    .hero-role strong { color: var(--accent); font-weight: 600; }
+
+    /* EDIT: Short intro paragraph in hero */
+    .hero-intro {
+      font-size: 0.975rem; color: var(--muted);
+      max-width: 520px; line-height: 1.8; margin-bottom: 36px;
+    }
+
+    .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    /* Hero photo */
+    .photo-ring {
+      position: relative; flex-shrink: 0;
+    }
+    .photo-ring::before {
+      content: ''; position: absolute; inset: -3px; border-radius: 20px; z-index: 0;
+      background: linear-gradient(140deg, var(--accent) 0%, transparent 55%);
+    }
+    /* EDIT: Replace "headshot.jpg" with your photo filename */
+    .hero-photo {
+      width: 270px; height: 330px; object-fit: cover; object-position: top center;
+      border-radius: 17px; position: relative; z-index: 1;
+      filter: grayscale(10%) contrast(1.02);
+    }
+
+    /* Hero staggered entrance */
+    .hero-content > * { animation: hIn 0.75s var(--ease) forwards; opacity: 0; }
+    .hero-content > *:nth-child(1) { animation-delay: 0.05s; }
+    .hero-content > *:nth-child(2) { animation-delay: 0.15s; }
+    .hero-content > *:nth-child(3) { animation-delay: 0.25s; }
+    .hero-content > *:nth-child(4) { animation-delay: 0.35s; }
+    .hero-content > *:nth-child(5) { animation-delay: 0.45s; }
+    @keyframes hIn {
+      from { opacity:0; transform:translateY(18px); }
+      to   { opacity:1; transform:none; }
+    }
+
+    /* ============================================================
+       ABOUT SECTION
+       Edit bio paragraphs, stats, and quick facts below
+       ============================================================ */
+    #about {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 360px; gap: 72px; align-items: start;
+    }
+
+    /* EDIT: Bio paragraphs — add or remove <p> blocks freely */
+    .bio p {
+      font-size: 0.975rem; color: var(--muted); line-height: 1.82; margin-bottom: 18px;
+    }
+    .bio p:last-child { margin-bottom: 0; }
+
+    /* Stats grid */
+    .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 28px; }
+    .stat {
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 18px;
+      transition: border-color 0.25s var(--ease);
+    }
+    .stat:hover { border-color: var(--accent); }
+    .stat-n {
+      font-family: var(--font-head); font-size: 1.65rem; font-weight: 700;
+      color: var(--accent); line-height: 1; margin-bottom: 4px;
+    }
+    .stat-l { font-size: 0.76rem; font-weight: 500; color: var(--muted); }
+
+    /* Quick facts list */
+    .facts-title {
+      font-size: 0.73rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 12px;
+    }
+    .fact {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 0.875rem; color: var(--muted); margin-bottom: 9px;
+    }
+    .fact::before {
+      content: ''; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent); flex-shrink: 0;
+    }
+
+    /* ============================================================
+       PROJECTS SECTION
+       Edit each project card — add or remove cards freely
+       ============================================================ */
+    #projects { padding: 96px 0; }
+    .proj-header {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      flex-wrap: wrap; gap: 16px; margin-bottom: 48px;
+    }
+    .proj-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(310px,1fr)); gap: 22px;
+    }
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden;
+      display: flex; flex-direction: column;
+      transition: transform 0.3s var(--ease), border-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      border-color: var(--accent-border);
+      box-shadow: 0 18px 36px rgba(0,0,0,0.45);
+    }
+
+    /* EDIT: Replace .thumb with <img src="..." class="thumb"> per project */
+    .thumb {
+      width: 100%; height: 172px;
+      background: linear-gradient(135deg, var(--surface-2) 0%, rgba(88,166,255,0.05) 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.2rem; position: relative; overflow: hidden;
+    }
+    .thumb::after {
+      content: ''; position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        45deg, transparent, transparent 7px,
+        rgba(88,166,255,0.018) 7px, rgba(88,166,255,0.018) 14px
+      );
+    }
+    .card-body { padding: 22px; flex: 1; display: flex; flex-direction: column; }
+    .card-title {
+      font-family: var(--font-head); font-size: 1.05rem; font-weight: 600;
+      color: var(--text); margin-bottom: 8px;
+    }
+    .card-desc {
+      font-size: 0.855rem; color: var(--muted); line-height: 1.65;
+      margin-bottom: 18px; flex: 1;
+    }
+    .tags { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 18px; }
+    .tag {
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.04em;
+      color: var(--accent); background: var(--accent-glow);
+      border: 1px solid var(--accent-border); border-radius: 6px; padding: 3px 9px;
+    }
+    .card-link {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 0.83rem; font-weight: 600; color: var(--accent);
+      transition: gap 0.2s var(--ease);
+    }
+    .card-link:hover { gap: 10px; }
+    .card-link::after { content: '→'; }
+
+    /* ============================================================
+       SKILLS SECTION
+       Edit skill pills — add or remove <span class="pill"> items
+       ============================================================ */
+    #skills {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 44px; }
+    .group-title {
+      font-size: 0.73rem; font-weight: 600; letter-spacing: 0.09em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 13px;
+    }
+    .pills { display: flex; flex-wrap: wrap; gap: 9px; margin-bottom: 28px; }
+    .pill {
+      font-size: 0.83rem; font-weight: 500; color: var(--text);
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 6px 15px;
+      transition: border-color 0.22s, color 0.22s, background 0.22s;
+    }
+    .pill:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-glow); }
+
+    /* ============================================================
+       EXPERIENCE SECTION
+       Edit .timeline-item blocks — add or remove as needed
+       ============================================================ */
+    #experience { padding: 96px 0; }
+    .timeline { position: relative; margin-top: 52px; }
+    .timeline::before {
+      content: ''; position: absolute; left: 0; top: 8px; bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--accent) 0%, var(--border) 85%);
+    }
+    .tl-item { padding-left: 30px; position: relative; margin-bottom: 44px; }
+    .tl-item:last-child { margin-bottom: 0; }
+    .tl-dot {
+      position: absolute; left: -4.5px; top: 6px;
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--accent); border: 2px solid var(--bg);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+
+    /* EDIT: Date range for each role */
+    .tl-date {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 6px;
+    }
+    /* EDIT: Job title */
+    .tl-role {
+      font-family: var(--font-head); font-size: 1.05rem; font-weight: 600;
+      color: var(--text); margin-bottom: 2px;
+    }
+    /* EDIT: Company name */
+    .tl-company { font-size: 0.875rem; color: var(--muted); margin-bottom: 10px; }
+    .tl-desc li {
+      font-size: 0.875rem; color: var(--muted); line-height: 1.7;
+      margin-bottom: 5px; padding-left: 14px; position: relative;
+    }
+    .tl-desc li::before { content: '—'; position: absolute; left: 0; color: var(--accent); }
+
+    /* Education card */
+    .edu-card {
+      display: flex; align-items: flex-start; gap: 18px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 22px; margin-top: 52px;
+      transition: border-color 0.25s var(--ease);
+    }
+    .edu-card:hover { border-color: var(--accent-border); }
+    .edu-icon { font-size: 1.5rem; flex-shrink: 0; margin-top: 2px; }
+    .edu-school {
+      font-family: var(--font-head); font-size: 0.975rem; font-weight: 600;
+      color: var(--text); margin-bottom: 3px;
+    }
+    .edu-deg { font-size: 0.855rem; color: var(--muted); }
+
+    /* ============================================================
+       CONTACT SECTION
+       Edit contact info, social links, and form below
+       ============================================================ */
+    #contact {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+    }
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: start;
+    }
+    .contact-items { display: flex; flex-direction: column; gap: 24px; }
+    .ci { display: flex; align-items: center; gap: 14px; }
+    .ci-icon {
+      width: 42px; height: 42px; border-radius: 10px; flex-shrink: 0;
+      background: var(--accent-glow); border: 1px solid var(--accent-border);
+      display: flex; align-items: center; justify-content: center; font-size: 1.05rem;
+    }
+    .ci-label {
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 2px;
+    }
+    .ci-val { font-size: 0.92rem; font-weight: 500; color: var(--text); }
+    .ci-val a { transition: color 0.2s; }
+    .ci-val a:hover { color: var(--accent); }
+
+    /* Social buttons */
+    .socials { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+    .soc-btn {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 0.83rem; font-weight: 500; color: var(--muted);
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 8px 16px;
+      transition: color 0.22s, border-color 0.22s, transform 0.22s;
+    }
+    .soc-btn:hover { color: var(--accent); border-color: var(--accent); transform: translateY(-2px); }
+
+    /* Contact form */
+    .cform { display: flex; flex-direction: column; gap: 14px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .fg { display: flex; flex-direction: column; gap: 5px; }
+    .fg label {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.07em;
+      text-transform: uppercase; color: var(--muted);
+    }
+    .fg input, .fg textarea {
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: 8px; color: var(--text); font-family: var(--font-body);
+      font-size: 0.88rem; padding: 11px 14px; outline: none; resize: vertical;
+      transition: border-color 0.22s, box-shadow 0.22s;
+    }
+    .fg input::placeholder, .fg textarea::placeholder { color: var(--muted); opacity: 0.55; }
+    .fg input:focus, .fg textarea:focus {
+      border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .fg textarea { min-height: 112px; }
+
+    /* ============================================================
+       FOOTER
+       Edit copyright and tagline below
+       ============================================================ */
+    footer {
+      padding: 28px 0;
+      border-top: 1px solid var(--border);
+    }
+    .foot {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
+    }
+    /* EDIT: Copyright text */
+    .foot-copy { font-size: 0.8rem; color: var(--muted); }
+    /* EDIT: Closing phrase */
+    .foot-tag { font-size: 0.8rem; color: var(--muted); }
+    .foot-tag span { color: var(--accent); }
+
+    /* ============================================================
+       RESPONSIVE — MOBILE
+       ============================================================ */
+    @media (max-width: 880px) {
+      .hero-grid { grid-template-columns: 1fr; text-align: center; }
+      .photo-ring { display: flex; justify-content: center; order: -1; }
+      .hero-photo { width: 190px; height: 230px; }
+      .badge { margin: 0 auto 22px; }
+      .hero-intro { margin: 0 auto 36px; }
+      .hero-ctas { justify-content: center; }
+      .about-grid { grid-template-columns: 1fr; gap: 44px; }
+      .skills-grid { grid-template-columns: 1fr; gap: 0; }
+      .contact-grid { grid-template-columns: 1fr; gap: 44px; }
+      .form-row { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .burger { display: flex; }
+    }
+    @media (max-width: 580px) {
+      section { padding: 68px 0; }
+      .stats { grid-template-columns: 1fr 1fr; }
+      .proj-header { flex-direction: column; align-items: flex-start; }
+      .foot { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       NAVIGATION
+       Edit nav links and logo below
+       ============================================================ -->
+  <nav id="nav">
+    <div class="nav-wrap">
+      <!-- EDIT: Logo in top-left -->
+      <a href="#hero" class="logo">HR<em>.</em></a>
+
+      <ul class="nav-links" id="navLinks">
+        <!-- EDIT: Nav items — keep href="#id" matching section IDs below -->
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+
+      <button class="burger" id="burger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <div class="mobile-nav" id="mobileNav">
+      <!-- EDIT: Mobile nav links (keep in sync with desktop nav above) -->
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#experience">Experience</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+
+  <!-- ============================================================
+       HERO SECTION
+       Edit name, title, intro, and CTA buttons below
+       ============================================================ -->
+  <section id="hero">
+    <div class="container">
+      <div class="hero-grid">
+
+        <div class="hero-content">
+          <!-- EDIT: Status badge text -->
+          <div class="badge">Open to Opportunities</div>
+
+          <!-- EDIT: Your full name (line break is optional) -->
+          <h1 class="hero-name">Hudaifa<br>Rehman</h1>
+
+          <!-- EDIT: Title / subtitle under name -->
+          <p class="hero-role">
+            B.S. Finance (FinTech) · UT Dallas<br>
+            <strong>Seeking Consulting &amp; Product Management Roles</strong>
+          </p>
+
+          <!-- EDIT: Hero intro — 1-2 sentences -->
+          <p class="hero-intro">
+            Finance student with a FinTech focus and real experience shipping products at AI startups and Big 4 consulting. I bridge technical teams with business outcomes — from PRDs to launch.
+          </p>
+
+          <div class="hero-ctas">
+            <!-- EDIT: Primary CTA — update href to "#projects" or a URL -->
+            <a href="#projects" class="btn btn-primary">View My Work</a>
+            <!-- EDIT: Secondary CTA — update href to "#contact" or a resume PDF -->
+            <a href="#contact" class="btn btn-outline">Get in Touch</a>
+          </div>
+        </div>
+
+        <!-- EDIT: Replace "headshot.jpg" with your photo filename -->
+        <div class="photo-ring fi">
+          <img src="headshot.jpg" alt="Hudaifa Rehman" class="hero-photo" />
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       ABOUT SECTION
+       Edit bio paragraphs, stats, and quick facts below
+       ============================================================ -->
+  <section id="about">
+    <div class="container">
+      <div class="about-grid">
+
+        <div class="bio fi">
+          <p class="label">About Me</p>
+          <!-- EDIT: About section heading -->
+          <h2 class="section-title">The Story Behind<br>the Resume</h2>
+
+          <!-- EDIT: Bio paragraph 1 -->
+          <p>
+            I'm a Finance student with a focus in FinTech at UT Dallas, with real experience building and shipping products across AI startups and Big 4 consulting. I've owned end-to-end product execution — writing PRDs, defining success metrics, managing backlogs, and keeping engineers and stakeholders aligned from discovery through launch.
+          </p>
+
+          <!-- EDIT: Bio paragraph 2 -->
+          <p>
+            I'm passionate about FinTech because financial products have some of the highest potential to create real user impact, and I genuinely enjoy being the person who bridges technical teams with that bigger picture. Whether I'm triaging dataflow issues, refining requirements with engineers, or turning research into a product recommendation — I bring both the analytical foundation and the communication skills that great PM work actually requires.
+          </p>
+
+          <!-- EDIT: Bio paragraph 3 -->
+          <p>
+            What makes my background a little different is that I'm a former CS major with over 10 years of coding experience who made a deliberate choice to move into Finance with a FinTech focus. I didn't want to just build things — I wanted to build the <em>right</em> things in an industry I care about. That means I can get into the weeds with engineers on implementation while staying locked in on the business and user outcomes that matter most.
+          </p>
+        </div>
+
+        <div class="fi d2">
+          <!-- EDIT: Stats — update numbers and labels freely -->
+          <div class="stats">
+            <div class="stat">
+              <div class="stat-n">10+</div>        <!-- EDIT: Stat number -->
+              <div class="stat-l">Years Coding</div> <!-- EDIT: Stat label -->
+            </div>
+            <div class="stat">
+              <div class="stat-n">Big 4</div>       <!-- EDIT: Stat number -->
+              <div class="stat-l">Consulting Exp.</div>
+            </div>
+            <div class="stat">
+              <div class="stat-n">5+</div>          <!-- EDIT: Stat number -->
+              <div class="stat-l">Products Shipped</div>
+            </div>
+            <div class="stat">
+              <div class="stat-n">AI</div>          <!-- EDIT: Stat number -->
+              <div class="stat-l">Startup Experience</div>
+            </div>
+          </div>
+
+          <!-- EDIT: Quick facts — add or remove .fact items freely -->
+          <p class="facts-title">Quick Facts</p>
+          <div class="fact">Former CS major turned FinTech builder</div>
+          <div class="fact">Based in Dallas, TX</div>                      <!-- EDIT: Location -->
+          <div class="fact">Obsessed with finance &amp; technology</div>
+          <div class="fact">Open to consulting &amp; PM roles</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       PROJECTS SECTION
+       Edit each project card — add or remove .card blocks as needed
+       ============================================================ -->
+  <section id="projects">
+    <div class="container">
+
+      <div class="proj-header fi">
+        <div>
+          <p class="label">My Work</p>
+          <!-- EDIT: Projects section heading -->
+          <h2 class="section-title">Selected Projects</h2>
+        </div>
+        <!-- EDIT: "View All" link — remove anchor if not needed -->
+        <a href="#" class="btn btn-outline" style="font-size:0.83rem;padding:8px 18px;">View All ↗</a>
+      </div>
+
+      <div class="proj-grid">
+
+        <!-- ── PROJECT 1 ── EDIT: All fields below ── -->
+        <div class="card fi d1">
+          <!-- EDIT: Swap .thumb for <img src="project1.jpg" alt="..." class="thumb"> -->
+          <div class="thumb">📊</div>                  <!-- EDIT: Emoji placeholder -->
+          <div class="card-body">
+            <h3 class="card-title">Project Name Here</h3>     <!-- EDIT: Project title -->
+            <!-- EDIT: 1-2 sentence description -->
+            <p class="card-desc">Short description of what this project is, the problem it solves, and your role in building or shipping it.</p>
+            <div class="tags">
+              <!-- EDIT: Add or remove <span class="tag"> items -->
+              <span class="tag">FinTech</span>
+              <span class="tag">Product</span>
+              <span class="tag">Python</span>
+            </div>
+            <!-- EDIT: Replace "#" with live URL or GitHub repo -->
+            <a href="#" class="card-link">View Project</a>
+          </div>
+        </div>
+
+        <!-- ── PROJECT 2 ── EDIT: All fields below ── -->
+        <div class="card fi d2">
+          <div class="thumb">🤖</div>                  <!-- EDIT: Emoji or swap for <img> -->
+          <div class="card-body">
+            <h3 class="card-title">Project Name Here</h3>
+            <p class="card-desc">Short description of what this project is, the problem it solves, and your role in building or shipping it.</p>
+            <div class="tags">
+              <span class="tag">AI</span>
+              <span class="tag">React</span>
+              <span class="tag">API</span>
+            </div>
+            <a href="#" class="card-link">View Project</a>
+          </div>
+        </div>
+
+        <!-- ── PROJECT 3 ── EDIT: All fields below ── -->
+        <div class="card fi d3">
+          <div class="thumb">📋</div>
+          <div class="card-body">
+            <h3 class="card-title">Project Name Here</h3>
+            <p class="card-desc">Short description of what this project is, the problem it solves, and your role in building or shipping it.</p>
+            <div class="tags">
+              <span class="tag">Consulting</span>
+              <span class="tag">Analytics</span>
+              <span class="tag">SQL</span>
+            </div>
+            <a href="#" class="card-link">View Project</a>
+          </div>
+        </div>
+
+        <!-- ── PROJECT 4 ── EDIT: All fields below ── -->
+        <div class="card fi d4">
+          <div class="thumb">💳</div>
+          <div class="card-body">
+            <h3 class="card-title">Project Name Here</h3>
+            <p class="card-desc">Short description of what this project is, the problem it solves, and your role in building or shipping it.</p>
+            <div class="tags">
+              <span class="tag">Payments</span>
+              <span class="tag">UX</span>
+              <span class="tag">Figma</span>
+            </div>
+            <a href="#" class="card-link">View Project</a>
+          </div>
+        </div>
+
+        <!-- ── ADD MORE PROJECTS: copy a .card block above and paste here ── -->
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       SKILLS SECTION
+       Edit skill pills — add or remove <span class="pill"> items
+       ============================================================ -->
+  <section id="skills">
+    <div class="container">
+      <div class="fi">
+        <p class="label">What I Bring</p>
+        <!-- EDIT: Skills section heading -->
+        <h2 class="section-title">Skills &amp; Tools</h2>
+      </div>
+
+      <div class="skills-grid">
+
+        <div class="fi d1">
+          <!-- EDIT: Group heading -->
+          <p class="group-title">Product &amp; Strategy</p>
+          <div class="pills">
+            <!-- EDIT: Add / remove pills freely -->
+            <span class="pill">Product Management</span>
+            <span class="pill">PRD Writing</span>
+            <span class="pill">Roadmapping</span>
+            <span class="pill">Stakeholder Alignment</span>
+            <span class="pill">Backlog Management</span>
+            <span class="pill">User Research</span>
+            <span class="pill">Success Metrics</span>
+            <span class="pill">Go-to-Market</span>
+          </div>
+
+          <!-- EDIT: Group heading -->
+          <p class="group-title">Finance &amp; Analytics</p>
+          <div class="pills">
+            <span class="pill">Financial Modeling</span>
+            <span class="pill">Excel / Sheets</span>
+            <span class="pill">SQL</span>
+            <span class="pill">Power BI</span>
+            <span class="pill">Data Analysis</span>
+            <span class="pill">FinTech Strategy</span>
+          </div>
+        </div>
+
+        <div class="fi d2">
+          <!-- EDIT: Group heading -->
+          <p class="group-title">Technical</p>
+          <div class="pills">
+            <span class="pill">Python</span>
+            <span class="pill">JavaScript</span>
+            <span class="pill">React</span>
+            <span class="pill">REST APIs</span>
+            <span class="pill">Git / GitHub</span>
+            <span class="pill">HTML / CSS</span>
+          </div>
+
+          <!-- EDIT: Group heading -->
+          <p class="group-title">Tools &amp; Workflows</p>
+          <div class="pills">
+            <span class="pill">Jira</span>
+            <span class="pill">Figma</span>
+            <span class="pill">Notion</span>
+            <span class="pill">Confluence</span>
+            <span class="pill">Linear</span>
+            <span class="pill">Slack</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       EXPERIENCE SECTION
+       Edit each .tl-item block — add or remove as needed
+       ============================================================ -->
+  <section id="experience">
+    <div class="container">
+      <div class="fi">
+        <p class="label">Background</p>
+        <!-- EDIT: Experience section heading -->
+        <h2 class="section-title">Experience</h2>
+      </div>
+
+      <div class="timeline">
+
+        <!-- ── ROLE 1 (most recent first) ── -->
+        <div class="tl-item fi d1">
+          <div class="tl-dot"></div>
+          <p class="tl-date">2024 — Present</p>              <!-- EDIT: Date range -->
+          <p class="tl-role">Role / Title Here</p>           <!-- EDIT: Job title -->
+          <p class="tl-company">Company Name</p>             <!-- EDIT: Company -->
+          <ul class="tl-desc">
+            <!-- EDIT: Bullet points — add or remove <li> items -->
+            <li>What you owned, built, or shipped in this role</li>
+            <li>Key outcome or metric you drove</li>
+            <li>Technologies or stakeholders you worked with</li>
+          </ul>
+        </div>
+
+        <!-- ── ROLE 2 ── -->
+        <div class="tl-item fi d2">
+          <div class="tl-dot"></div>
+          <p class="tl-date">2023 — 2024</p>                 <!-- EDIT: Date range -->
+          <p class="tl-role">Role / Title Here</p>
+          <p class="tl-company">Company Name</p>
+          <ul class="tl-desc">
+            <li>What you owned, built, or shipped in this role</li>
+            <li>Key outcome or metric you drove</li>
+            <li>Collaboration with engineers, stakeholders, or clients</li>
+          </ul>
+        </div>
+
+        <!-- ── ROLE 3 ── duplicate this block to add more ── -->
+        <div class="tl-item fi d3">
+          <div class="tl-dot"></div>
+          <p class="tl-date">2022 — 2023</p>
+          <p class="tl-role">Role / Title Here</p>
+          <p class="tl-company">Company Name</p>
+          <ul class="tl-desc">
+            <li>What you owned, built, or shipped in this role</li>
+            <li>Key outcome or metric you drove</li>
+          </ul>
+        </div>
+
+      </div><!-- /timeline -->
+
+      <!-- EDIT: Education block -->
+      <div class="edu-card fi">
+        <div class="edu-icon">🎓</div>
+        <div>
+          <!-- EDIT: School name -->
+          <p class="edu-school">The University of Texas at Dallas</p>
+          <!-- EDIT: Degree, major, and expected graduation date -->
+          <p class="edu-deg">B.S. Finance (FinTech Concentration) · Expected May 2026</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       CONTACT SECTION
+       Edit contact info, social links, and form below
+       ============================================================ -->
+  <section id="contact">
+    <div class="container">
+      <div class="contact-grid">
+
+        <div class="fi">
+          <p class="label">Say Hello</p>
+          <!-- EDIT: Contact heading -->
+          <h2 class="section-title">Let's Connect</h2>
+          <!-- EDIT: Contact invite line -->
+          <p class="section-sub" style="margin-bottom:36px;">
+            Have a role, project, or idea in mind? I'm actively looking for consulting and product management opportunities and would love to hear from you.
+          </p>
+
+          <div class="contact-items">
+            <!-- EDIT: Email address -->
+            <div class="ci">
+              <div class="ci-icon">✉️</div>
+              <div>
+                <p class="ci-label">Email</p>
+                <p class="ci-val"><a href="mailto:Hudayfa.r@gmail.com">Hudayfa.r@gmail.com</a></p>
+              </div>
+            </div>
+
+            <!-- EDIT: Location -->
+            <div class="ci">
+              <div class="ci-icon">📍</div>
+              <div>
+                <p class="ci-label">Location</p>
+                <p class="ci-val">Dallas, TX</p>                <!-- EDIT: Your city -->
+              </div>
+            </div>
+          </div>
+
+          <!-- EDIT: Social links — replace href="#" with real URLs -->
+          <div class="socials">
+            <a href="#" class="soc-btn" target="_blank" rel="noopener">  <!-- EDIT: LinkedIn URL -->
+              LinkedIn ↗
+            </a>
+            <a href="#" class="soc-btn" target="_blank" rel="noopener">  <!-- EDIT: GitHub URL -->
+              GitHub ↗
+            </a>
+            <!-- EDIT: Uncomment and fill in to add Resume PDF link -->
+            <!-- <a href="resume.pdf" class="soc-btn" target="_blank" rel="noopener">Resume ↗</a> -->
+            <!-- EDIT: Add more social buttons by copying a line above -->
+          </div>
+        </div>
+
+        <!-- EDIT: Remove this entire <div> block if you don't want a contact form -->
+        <div class="fi d2">
+          <form class="cform" onsubmit="submitForm(event)">
+            <div class="form-row">
+              <div class="fg">
+                <label for="fname">Name</label>
+                <input type="text" id="fname" name="name" placeholder="Your name" required />
+              </div>
+              <div class="fg">
+                <label for="femail">Email</label>
+                <input type="email" id="femail" name="email" placeholder="your@email.com" required />
+              </div>
+            </div>
+            <div class="fg">
+              <label for="fsubject">Subject</label>
+              <!-- EDIT: Subject field placeholder text -->
+              <input type="text" id="fsubject" name="subject" placeholder="PM role, consulting project, collaboration..." />
+            </div>
+            <div class="fg">
+              <label for="fmsg">Message</label>
+              <textarea id="fmsg" name="message" placeholder="Tell me about the opportunity or project..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" style="align-self:flex-start;">Send Message</button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       FOOTER
+       Edit copyright and closing phrase below
+       ============================================================ -->
+  <footer>
+    <div class="container">
+      <div class="foot">
+        <!-- EDIT: Copyright line -->
+        <p class="foot-copy">© 2025 Hudaifa Rehman. All rights reserved.</p>
+        <!-- EDIT: Closing phrase — delete <p> to remove -->
+        <p class="foot-tag">Built with <span>precision</span> in Dallas, TX</p>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ============================================================
+       JAVASCRIPT
+       Handles: sticky nav, mobile menu, scroll-spy, fade-in, form
+       No edits needed here unless you want to change behavior
+       ============================================================ -->
+  <script>
+    // ── Sticky nav ───────────────────────────────────────────────
+    const nav = document.getElementById('nav');
+    const onScroll = () => nav.classList.toggle('stuck', window.scrollY > 24);
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    // ── Mobile menu ──────────────────────────────────────────────
+    const burger    = document.getElementById('burger');
+    const mobileNav = document.getElementById('mobileNav');
+    burger.addEventListener('click', () => {
+      burger.classList.toggle('open');
+      mobileNav.classList.toggle('open');
+    });
+    mobileNav.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        burger.classList.remove('open');
+        mobileNav.classList.remove('open');
+      });
+    });
+
+    // ── Scroll-spy: highlight active nav link ─────────────────────
+    const sections  = document.querySelectorAll('section[id]');
+    const navLinks  = document.querySelectorAll('.nav-links a');
+    const spyScroll = () => {
+      const y = window.scrollY + 90;
+      sections.forEach(s => {
+        if (y >= s.offsetTop && y < s.offsetTop + s.offsetHeight) {
+          navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === `#${s.id}`));
+        }
+      });
+    };
+    window.addEventListener('scroll', spyScroll, { passive: true });
+
+    // ── Fade-in on scroll (IntersectionObserver) ─────────────────
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('show'); io.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fi').forEach(el => io.observe(el));
+
+    // ── Contact form ─────────────────────────────────────────────
+    // EDIT: Replace this stub with Formspree, EmailJS, or your backend
+    function submitForm(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('button[type="submit"]');
+      btn.textContent = 'Message Sent ✓';
+      btn.style.background = '#238636';
+      btn.disabled = true;
+      setTimeout(() => {
+        btn.textContent = 'Send Message';
+        btn.style.background = '';
+        btn.disabled = false;
+        e.target.reset();
+      }, 3000);
+    }
+  </script>
+
+</body>
+</html>
