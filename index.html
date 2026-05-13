@@ -72,6 +72,19 @@
       font-size: 0.975rem; color: var(--muted); max-width: 500px; line-height: 1.75;
     }
 
+    /* ── Global hover expand — applies to all interactive elements ── */
+    .btn, .card, .stat, .pill, .soc-btn, .why-card, .tl-item, .ci, .fact {
+      transition-property: transform, border-color, box-shadow, background, color;
+      transition-duration: 0.22s;
+      transition-timing-function: var(--ease);
+    }
+    .stat:hover   { transform: scale(1.04); }
+    .pill:hover   { transform: scale(1.04); }
+    .tl-item:hover { transform: translateX(4px); }
+    .fact:hover   { transform: translateX(4px); color: var(--text); }
+    .ci:hover     { transform: translateX(4px); }
+    .why-card:hover { transform: scale(1.02); }
+
     /* ── Scroll fade-in ─────────────────────────────────────────── */
     .fi {
       opacity: 0; transform: translateY(22px);
@@ -276,9 +289,17 @@
 
     /* EDIT: Bio paragraphs — add or remove <p> blocks freely */
     .bio p {
-      font-size: 0.975rem; color: var(--muted); line-height: 1.82; margin-bottom: 18px;
+      font-size: 0.975rem; color: var(--muted); line-height: 1.82; margin-bottom: 12px;
+      padding: 10px 14px; border-radius: 8px; cursor: default;
+      transition: color 0.22s var(--ease), background 0.22s var(--ease);
     }
     .bio p:last-child { margin-bottom: 0; }
+    .bio p:hover { color: var(--text); background: rgba(88,166,255,0.05); }
+    .bio strong {
+      color: var(--text); font-weight: 700;
+      border-bottom: 1.5px solid var(--accent);
+      padding-bottom: 1px;
+    }
 
     /* Stats grid */
     .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 28px; }
@@ -293,6 +314,19 @@
       color: var(--accent); line-height: 1; margin-bottom: 4px;
     }
     .stat-l { font-size: 0.76rem; font-weight: 500; color: var(--muted); }
+
+    /* Why Choose Me card */
+    .why-card {
+      background: var(--surface-2);
+      border: 1px solid var(--accent-border);
+      border-radius: var(--radius);
+      padding: 20px 22px;
+      margin-top: 24px;
+      transition: border-color 0.25s var(--ease);
+    }
+    .why-card:hover { border-color: var(--accent); }
+    .why-card .facts-title { color: var(--accent); }
+    .why-card .fact { color: var(--text); }
 
     /* Quick facts list */
     .facts-title {
@@ -384,8 +418,8 @@
        ============================================================ */
     #experience { padding: 96px 0; }
     .exp-grid {
-      display: grid; grid-template-columns: 1fr 300px;
-      gap: 48px; align-items: center; margin-top: 52px;
+      display: grid; grid-template-columns: 1fr 420px;
+      gap: 48px; align-items: stretch; margin-top: 52px;
     }
     .timeline { position: relative; }
     .timeline::before {
@@ -420,20 +454,181 @@
     }
     .tl-desc li::before { content: '—'; position: absolute; left: 0; color: var(--accent); }
 
+    /* Experience items — clickable */
+    .tl-item { cursor: pointer; }
+    .tl-item:hover .tl-role { color: var(--accent); }
+    .tl-item:hover .tl-role { transition: color 0.2s var(--ease); }
+    .tl-full { display: none; }
+    .tl-hint {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--accent); opacity: 0.6;
+      margin-top: 8px; user-select: none;
+      transition: opacity 0.2s;
+    }
+    .tl-item:hover .tl-hint { opacity: 1; }
+
+    /* ── Role modal ──────────────────────────────────────────────── */
+    .role-overlay {
+      position: fixed; inset: 0; z-index: 2000;
+      background: rgba(0,0,0,0);
+      backdrop-filter: blur(0px); -webkit-backdrop-filter: blur(0px);
+      display: flex; align-items: center; justify-content: center;
+      padding: 24px;
+      pointer-events: none;
+      transition: background 0.35s var(--ease), backdrop-filter 0.35s var(--ease);
+    }
+    .role-overlay.open {
+      background: rgba(0,0,0,0.72);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      pointer-events: all;
+    }
+    .role-modal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-top: 2px solid var(--accent);
+      border-radius: 16px;
+      padding: 48px 52px;
+      width: 100%; max-width: 740px;
+      max-height: 88vh; overflow-y: auto;
+      position: relative;
+      transform: scale(0.9) translateY(28px);
+      opacity: 0;
+      transition: transform 0.4s cubic-bezier(0.34,1.42,0.64,1), opacity 0.3s var(--ease);
+    }
+    .role-overlay.open .role-modal {
+      transform: scale(1) translateY(0);
+      opacity: 1;
+    }
+    .modal-close {
+      position: absolute; top: 20px; right: 20px;
+      width: 36px; height: 36px; border-radius: 8px;
+      background: var(--surface-2); border: 1px solid var(--border);
+      color: var(--muted); font-size: 1.1rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+    .modal-close:hover { background: var(--accent-glow); color: var(--text); border-color: var(--accent); }
+    .modal-date {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 10px;
+    }
+    .modal-role {
+      font-family: var(--font-head); font-size: clamp(1.4rem,2.4vw,1.9rem);
+      font-weight: 700; color: var(--text); line-height: 1.1;
+      letter-spacing: -0.02em; margin-bottom: 6px;
+    }
+    .modal-company { font-size: 0.95rem; color: var(--muted); margin-bottom: 28px; }
+    .modal-divider { height: 1px; background: var(--border); margin-bottom: 28px; }
+    .modal-bullets li {
+      font-size: 0.95rem; color: var(--muted); line-height: 1.78;
+      margin-bottom: 14px; padding-left: 18px; position: relative;
+    }
+    .modal-bullets li::before { content: '—'; position: absolute; left: 0; color: var(--accent); }
+    .modal-bullets li:last-child { margin-bottom: 0; }
+
+    /* Scrollbar inside modal */
+    .role-modal::-webkit-scrollbar { width: 4px; }
+    .role-modal::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
     /* Education card */
     .edu-card {
-      display: flex; align-items: flex-start; gap: 18px;
+      display: flex; flex-direction: column; gap: 0;
+      align-items: center; text-align: center;
       background: var(--surface-2); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 22px;
-      transition: border-color 0.25s var(--ease);
+      border-radius: var(--radius); padding: 28px;
+      transition: border-color 0.25s var(--ease), transform 0.25s var(--ease);
     }
-    .edu-card:hover { border-color: var(--accent-border); }
-    .edu-icon { font-size: 1.5rem; flex-shrink: 0; margin-top: 2px; }
+    .edu-card:hover { border-color: var(--accent-border); transform: scale(1.02); }
+    .edu-top { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 24px; }
+    .edu-icon { font-size: 1.8rem; }
+    .edu-label {
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 6px;
+    }
     .edu-school {
-      font-family: var(--font-head); font-size: 0.975rem; font-weight: 600;
-      color: var(--text); margin-bottom: 3px;
+      font-family: var(--font-head); font-size: 1.05rem; font-weight: 600;
+      color: var(--text); margin-bottom: 5px;
     }
-    .edu-deg { font-size: 0.855rem; color: var(--muted); }
+    .edu-deg { font-size: 0.855rem; color: var(--muted); line-height: 1.5; }
+    .edu-divider {
+      width: 100%; height: 1px; background: var(--border); margin-bottom: 20px;
+    }
+    .edu-section-title {
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 12px;
+    }
+    .edu-items { display: flex; flex-direction: column; gap: 8px; margin-bottom: 4px; align-items: center; }
+    .edu-item {
+      font-size: 0.855rem; color: var(--muted); line-height: 1.5; text-align: center;
+      padding: 5px 10px; border-radius: 6px;
+      transition: color 0.2s var(--ease), background 0.2s var(--ease);
+      cursor: default;
+    }
+    .edu-item:hover { color: var(--text); background: rgba(88,166,255,0.07); }
+
+    /* Edu card sub-sections (top info, orgs block, coursework block) */
+    .edu-block {
+      width: 100%; padding: 14px 12px; border-radius: 8px;
+      transition: background 0.22s var(--ease);
+      cursor: default;
+    }
+    .edu-block:hover { background: rgba(88,166,255,0.06); }
+
+    /* Org progression mini-timeline */
+    .org-intro {
+      text-align: left; margin-bottom: 14px; padding: 0 4px;
+    }
+    .org-name {
+      font-family: var(--font-head); font-size: 0.88rem; font-weight: 600;
+      color: var(--text); margin-bottom: 5px;
+    }
+    .org-desc {
+      font-size: 0.78rem; color: var(--muted); line-height: 1.55;
+    }
+    .org-desc strong { color: var(--accent); }
+    .org-timeline {
+      position: relative; padding-left: 22px; text-align: left;
+    }
+    .org-timeline::before {
+      content: ''; position: absolute; left: 4px; top: 8px; bottom: 8px;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--accent) 0%, var(--border) 90%);
+    }
+    .org-step {
+      position: relative; margin-bottom: 10px; cursor: pointer;
+      padding: 7px 10px 7px 12px; border-radius: 8px;
+      transition: background 0.2s var(--ease);
+    }
+    .org-step:last-child { margin-bottom: 0; }
+    .org-step:hover { background: rgba(88,166,255,0.07); }
+    .org-dot {
+      position: absolute; left: -18px; top: 14px;
+      width: 9px; height: 9px; border-radius: 50%;
+      background: var(--border); border: 2px solid var(--surface-2);
+      transition: background 0.2s;
+    }
+    .org-step.current .org-dot {
+      background: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .org-step:hover .org-dot { background: var(--accent); }
+    .org-step-date {
+      font-size: 0.67rem; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 2px;
+      transition: color 0.2s;
+    }
+    .org-step.current .org-step-date { color: var(--accent); }
+    .org-step-title {
+      font-size: 0.82rem; font-weight: 600; color: var(--muted);
+      transition: color 0.2s var(--ease);
+    }
+    .org-step.current .org-step-title { color: var(--text); }
+    .org-step:hover .org-step-title { color: var(--accent); }
+    .org-step .tl-hint {
+      font-size: 0.64rem; margin-top: 3px; opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .org-step:hover .tl-hint { opacity: 0.8; }
 
     /* ============================================================
        CONTACT SECTION
@@ -593,12 +788,9 @@
             <strong>Seeking Consulting &amp; Product Management Roles</strong>
           </p>
 
-          <!-- EDIT: Hero intro — 1-2 sentences -->
-          <p class="hero-intro">
-            Finance student with a FinTech focus and real experience shipping products at AI startups and Big 4 consulting. I bridge technical teams with business outcomes — from PRDs to launch.
-          </p>
-
           <div class="hero-ctas">
+            <!-- EDIT: About Me CTA — far left, links to About section -->
+            <a href="#about" class="btn btn-outline">About Me</a>
             <!-- EDIT: Primary CTA — update href to "#projects" or a URL -->
             <a href="#projects" class="btn btn-primary">View My Work</a>
             <!-- EDIT: Secondary CTA — update href to "#contact" or a resume PDF -->
@@ -631,17 +823,22 @@
 
           <!-- EDIT: Bio paragraph 1 -->
           <p>
-            I'm a Finance student with a focus in FinTech at UT Dallas, with real experience building and shipping products across AI startups and Big 4 consulting. I've owned end-to-end product execution — writing PRDs, defining success metrics, managing backlogs, and keeping engineers and stakeholders aligned from discovery through launch.
+            I'm a Finance student with a focus in <strong>FinTech at UT Dallas</strong>, with real experience building and shipping products across <strong>AI startups and Big 4 consulting</strong>.
           </p>
 
           <!-- EDIT: Bio paragraph 2 -->
           <p>
-            I'm passionate about FinTech because financial products have some of the highest potential to create real user impact, and I genuinely enjoy being the person who bridges technical teams with that bigger picture. Whether I'm triaging dataflow issues, refining requirements with engineers, or turning research into a product recommendation — I bring both the analytical foundation and the communication skills that great PM work actually requires.
+            At <strong>EY</strong>, I worked directly on client products, owning documentation and driving changes from a <strong>security and risk standpoint</strong>, translating complex compliance requirements into clear, actionable specs that engineers and stakeholders could actually move on. At <strong>Headstarter AI</strong>, I led a team through a full product build, taking an <strong>LLM-powered Q&amp;A bot from problem definition to launch</strong>, writing PRDs, setting success metrics, and keeping everyone aligned from discovery through delivery.
           </p>
 
           <!-- EDIT: Bio paragraph 3 -->
           <p>
-            What makes my background a little different is that I'm a former CS major with over 10 years of coding experience who made a deliberate choice to move into Finance with a FinTech focus. I didn't want to just build things — I wanted to build the <em>right</em> things in an industry I care about. That means I can get into the weeds with engineers on implementation while staying locked in on the business and user outcomes that matter most.
+            I'm passionate about FinTech because financial products have some of the <strong>highest potential to create real user impact</strong>. What draws me to PM specifically is the natural pull I feel toward <strong>leading teams and owning outcomes</strong>. I can read code and get into implementation details with engineers, then turn around and translate that into risk, business, or user impact terms for the stakeholders who need to make decisions. <strong>Being the connective tissue between those worlds is where I do my best work.</strong>
+          </p>
+
+          <!-- EDIT: Bio paragraph 4 -->
+          <p>
+            What makes my background a little different is that I came into college as a CS major with <strong>over 10 years of coding experience</strong>, but most of that code came from pure curiosity rather than assignments. When school started dictating what I built and why, it stopped feeling like mine. I made a deliberate move into Finance with a FinTech focus because I wanted to lead, think from a business perspective, and build things driven by real problems rather than coursework. That shift gave me the best of both sides — <strong>the technical fluency to work alongside engineers</strong> and <strong>the business grounding to make sure what gets built actually matters.</strong>
           </p>
         </div>
 
@@ -669,16 +866,18 @@
           <!-- EDIT: Quick facts — add or remove .fact items freely -->
           <p class="facts-title">Quick Facts</p>
           <div class="fact">Former CS major turned FinTech builder</div>
-          <div class="fact">Based in Dallas, TX</div>                      <!-- EDIT: Location -->
-          <div class="fact">Obsessed with finance &amp; technology</div>
-          <div class="fact">Open to consulting &amp; PM roles</div>
+          <div class="fact">Co-founded a non-profit and raised $50K in 6 weeks</div>
+          <div class="fact">5-figure returns in crypto and stocks through funded trading</div>
+          <div class="fact">Co-lead a competitive consulting org delivering pro-bono work to non-profits</div>
 
-          <!-- EDIT: "Why Choose Me" bullets — add or remove .fact items freely -->
-          <p class="facts-title" style="margin-top:24px;">Why Choose Me</p>
-          <div class="fact">I think like an engineer and communicate like a strategist</div>
-          <div class="fact">End-to-end ownership — discovery to launch</div>
-          <div class="fact">10+ years of code means I never lose engineers in translation</div>
-          <div class="fact">FinTech isn't a pivot — it's always been the goal</div>
+          <!-- EDIT: "Why Choose Me" card — add or remove .fact items freely -->
+          <div class="why-card">
+            <p class="facts-title">Why Choose Me</p>
+            <div class="fact">End-to-end product ownership</div>
+            <div class="fact">Technical fluency with business translation</div>
+            <div class="fact">Metrics-driven mindset</div>
+            <div class="fact">Stakeholder management at scale</div>
+          </div>
         </div>
 
       </div>
@@ -702,56 +901,203 @@
 
         <div class="timeline">
 
-          <!-- ── ROLE 1 (most recent first) ── -->
-          <div class="tl-item fi d1">
+          <!-- ── ROLE 1 — EY Incoming ── -->
+          <div class="tl-item fi d1" onclick="openRole(this)">
             <div class="tl-dot"></div>
-            <p class="tl-date">2024 — Present</p>              <!-- EDIT: Date range -->
-            <p class="tl-role">Role / Title Here</p>           <!-- EDIT: Job title -->
-            <p class="tl-company">Company Name</p>             <!-- EDIT: Company -->
-            <ul class="tl-desc">
-              <!-- EDIT: Bullet points — add or remove <li> items -->
-              <li>What you owned, built, or shipped in this role</li>
-              <li>Key outcome or metric you drove</li>
-              <li>Technologies or stakeholders you worked with</li>
+            <p class="tl-date">Jun 2026 — Aug 2026</p>
+            <p class="tl-role">Incoming Technical Product Management Intern</p>
+            <p class="tl-company">Ernst &amp; Young (EY) · Dallas, TX</p>
+            <ul class="tl-desc tl-short">
+              <li>Incoming summer 2026 — focused on digital risk product work</li>
             </ul>
+            <ul class="tl-full">
+              <li>Incoming summer 2026 — will be working on the digital risk side of the product</li>
+            </ul>
+            <p class="tl-hint">Click to expand ↗</p>
           </div>
 
-          <!-- ── ROLE 2 ── -->
-          <div class="tl-item fi d2">
+          <!-- ── ROLE 2 — EY Consulting ── -->
+          <div class="tl-item fi d2" onclick="openRole(this)">
             <div class="tl-dot"></div>
-            <p class="tl-date">2023 — 2024</p>                 <!-- EDIT: Date range -->
-            <p class="tl-role">Role / Title Here</p>
-            <p class="tl-company">Company Name</p>
-            <ul class="tl-desc">
-              <li>What you owned, built, or shipped in this role</li>
-              <li>Key outcome or metric you drove</li>
-              <li>Collaboration with engineers, stakeholders, or clients</li>
+            <p class="tl-date">Jun 2025 — Aug 2025</p>
+            <p class="tl-role">Product &amp; Tech Consulting Intern</p>
+            <p class="tl-company">Ernst &amp; Young (EY) · Dallas, TX</p>
+            <ul class="tl-desc tl-short">
+              <li>Triaged data pipeline issues across SOX-regulated financial processes</li>
+              <li>Built reusable documentation across 15+ workflows</li>
+              <li>Owned live Jira backlog keeping engineers and audit cycles unblocked</li>
+              <li>Redesigned identity governance workflows to reduce audit exceptions</li>
             </ul>
+            <ul class="tl-full">
+              <li>Triaged 15+ Snowflake/AWS data pipeline issues by SOX risk and business deadline, unblocking engineering teams and keeping financial audit cycles on schedule</li>
+              <li>Converted engineer knowledge into reusable process docs across 15+ workflows, eliminating repeated stakeholder questions and giving new team members a faster path to context</li>
+              <li>Managed a live Jira backlog across 15+ data processes, reprioritizing issues daily by risk and deadline to surface blockers before they stalled engineers or delayed audit evidence</li>
+              <li>Redesigned Oracle-to-Saviynt identity governance workflows, simplifying approval routing, tightening access validation, and reducing manual reviewer steps flagged in prior audit findings</li>
+            </ul>
+            <p class="tl-hint">Click to expand ↗</p>
           </div>
 
-          <!-- ── ROLE 3 ── duplicate this block to add more ── -->
-          <div class="tl-item fi d3">
+          <!-- ── ROLE 3 — Headstarter AI ── -->
+          <div class="tl-item fi d3" onclick="openRole(this)">
             <div class="tl-dot"></div>
-            <p class="tl-date">2022 — 2023</p>
-            <p class="tl-role">Role / Title Here</p>
-            <p class="tl-company">Company Name</p>
-            <ul class="tl-desc">
-              <li>What you owned, built, or shipped in this role</li>
-              <li>Key outcome or metric you drove</li>
+            <p class="tl-date">Jul 2024 — Aug 2024</p>
+            <p class="tl-role">Product Management Intern</p>
+            <p class="tl-company">Headstarter AI · Remote</p>
+            <ul class="tl-desc tl-short">
+              <li>Scoped and shipped an LLM-powered Q&amp;A product in 3 weeks — 5K+ users, top 3 of 208</li>
+              <li>Owned PRD, north star metric, and aligned engineers on MVP scope</li>
+              <li>Stress-tested retrieval behavior pre-launch to catch edge cases</li>
             </ul>
+            <ul class="tl-full">
+              <li>Scoped and shipped an LLM-powered Q&amp;A product in 3 weeks, narrowing focus based on user feedback, reaching 5K+ users, and ranking top 3 of 208 in the program cohort</li>
+              <li>Wrote the PRD, defined the north star metric, and aligned 5 engineers on MVP scope, cutting 3 feature requests to stay shippable within a 3-week timeline</li>
+              <li>Reviewed engineer PRs and stress-tested retrieval behavior against real user questions, catching edge cases pre-launch that would have degraded answer quality at scale</li>
+            </ul>
+            <p class="tl-hint">Click to expand ↗</p>
+          </div>
+
+          <!-- ── ROLE 4 — NRG ── -->
+          <div class="tl-item fi d4" onclick="openRole(this)">
+            <div class="tl-dot"></div>
+            <p class="tl-date">Jan 2024 — Mar 2024</p>
+            <p class="tl-role">AI Product Management Intern</p>
+            <p class="tl-company">National Research Group · Remote</p>
+            <ul class="tl-desc tl-short">
+              <li>Built a 6-category AI risk taxonomy adopted as NRG's client scoring framework</li>
+              <li>Presented findings to SVP and Research Director, shaping firm-wide risk strategy</li>
+            </ul>
+            <ul class="tl-full">
+              <li>Built a 6-category AI risk taxonomy from literature review and expert interviews, adopted by NRG as the scoring framework for client risk assessments and forecasting models</li>
+              <li>Presented AI risk findings directly to NRG's SVP and Research Director, with recommendations shaping the firm's risk mitigation framework delivered to enterprise clients</li>
+            </ul>
+            <p class="tl-hint">Click to expand ↗</p>
           </div>
 
         </div><!-- /timeline -->
 
         <!-- EDIT: Education card — sits right of timeline on desktop -->
         <div class="edu-card fi">
-          <div class="edu-icon">🎓</div>
-          <div>
-            <!-- EDIT: School name -->
-            <p class="edu-school">The University of Texas at Dallas</p>
-            <!-- EDIT: Degree, major, and expected graduation date -->
-            <p class="edu-deg">B.S. Finance (FinTech Concentration) · Expected May 2026</p>
+
+          <!-- School info -->
+          <div class="edu-block">
+            <div class="edu-top">
+              <div class="edu-icon">🎓</div>
+              <div>
+                <!-- EDIT: Label -->
+                <p class="edu-label">Current University</p>
+                <!-- EDIT: School name -->
+                <p class="edu-school">The University of Texas at Dallas</p>
+                <!-- EDIT: Degree and graduation -->
+                <p class="edu-deg">B.S. Finance (FinTech Concentration)</p>
+                <p class="edu-deg" style="margin-top:4px;">Expected May 2027 &nbsp;·&nbsp; GPA: 3.5 / 4.0</p>
+              </div>
+            </div>
           </div>
+
+          <div class="edu-divider"></div>
+
+          <!-- EDIT: Campus Organizations -->
+          <div class="edu-block">
+            <p class="edu-section-title">Campus Organizations</p>
+
+            <div class="org-intro">
+              <p class="org-name">180 Degrees Consulting</p>
+              <p class="org-desc">One of the world's largest student consulting orgs · 200+ global branches · <strong>~10% semester acceptance rate</strong> — 10–15 selected from 100+ applicants each semester</p>
+            </div>
+
+            <div class="org-timeline">
+
+              <!-- Step 1: Project Team Member -->
+              <div class="org-step" onclick="openRole(this)">
+                <p class="tl-date" style="display:none">Fall 2025</p>
+                <p class="tl-role" style="display:none">Project Team Member</p>
+                <p class="tl-company" style="display:none">180 Degrees Consulting · Client: Second Chance SPCA</p>
+                <ul class="tl-full">
+                  <li>Conducted financial analysis on Second Chance SPCA's debt structure, identifying funding gaps and areas of financial risk for the no-kill animal shelter</li>
+                  <li>Built a structured grant recommendation deliverable, prioritizing targeted grant opportunities based on SPCA's mission, eligibility, and funding urgency</li>
+                  <li>Created multi-year financial projections in Tableau to model debt paydown scenarios and visualize the impact of different funding strategies</li>
+                  <li>Organized all client financial data into a structured Excel model, giving SPCA leadership a consolidated view of expenses, revenue, and grant timelines</li>
+                </ul>
+                <div class="org-dot"></div>
+                <div class="org-step-body">
+                  <p class="org-step-date">Fall 2025</p>
+                  <p class="org-step-title">Project Team Member</p>
+                </div>
+                <p class="tl-hint">Click to expand ↗</p>
+              </div>
+
+              <!-- Step 2: Project Team Lead -->
+              <div class="org-step" onclick="openRole(this)">
+                <p class="tl-date" style="display:none">Spring 2026</p>
+                <p class="tl-role" style="display:none">Project Team Lead</p>
+                <p class="tl-company" style="display:none">180 Degrees Consulting · Client: Foundation for Choice</p>
+                <ul class="tl-full">
+                  <li>Led market research across local school districts to identify funding opportunities available in exchange for college prep service partnerships</li>
+                  <li>Structured an outreach and proposal framework positioning Foundation for Choice as a high-value partner to district administrators and decision-makers</li>
+                  <li>Managed a 4-person team from kickoff through final delivery — dividing workstreams, running weekly check-ins, and keeping the engagement on scope</li>
+                  <li>Synthesized district-level research into a prioritized target list with funding potential estimates, delivered directly to Foundation for Choice leadership</li>
+                </ul>
+                <div class="org-dot"></div>
+                <div class="org-step-body">
+                  <p class="org-step-date">Spring 2026</p>
+                  <p class="org-step-title">Project Team Lead</p>
+                </div>
+                <p class="tl-hint">Click to expand ↗</p>
+              </div>
+
+              <!-- Step 3: Director of Finance & Operations -->
+              <div class="org-step" onclick="openRole(this)">
+                <p class="tl-date" style="display:none">Spring 2026</p>
+                <p class="tl-role" style="display:none">Director of Finance &amp; Operations</p>
+                <p class="tl-company" style="display:none">180 Degrees Consulting · UT Dallas</p>
+                <ul class="tl-full">
+                  <li>Managed chapter finances — budget allocation, expense tracking, and semester reconciliation across a 30+ member organization</li>
+                  <li>Streamlined internal operations by documenting recurring processes and building standardized templates for project teams</li>
+                  <li>Coordinated logistics for chapter events, client matching, and semester kickoff programs across leadership and membership</li>
+                </ul>
+                <div class="org-dot"></div>
+                <div class="org-step-body">
+                  <p class="org-step-date">Spring 2026</p>
+                  <p class="org-step-title">Director of Finance &amp; Operations</p>
+                </div>
+                <p class="tl-hint">Click to expand ↗</p>
+              </div>
+
+              <!-- Step 4: Consulting Director (current) -->
+              <div class="org-step current" onclick="openRole(this)">
+                <p class="tl-date" style="display:none">Fall 2026</p>
+                <p class="tl-role" style="display:none">Consulting Director</p>
+                <p class="tl-company" style="display:none">180 Degrees Consulting · UT Dallas</p>
+                <ul class="tl-full">
+                  <li>Review and quality-check all project team deliverables before client presentations, ensuring work meets chapter standards and client expectations</li>
+                  <li>Lead in-depth trainings on technical skills — financial modeling, Tableau, Excel, structured problem-solving — and soft skills including client communication, stakeholder management, and presentation delivery</li>
+                  <li>Oversee analyst selection and client matching each semester, placing members on engagements based on skills and growth areas</li>
+                  <li>Drive direction for one of the most competitive orgs on campus: ~10% acceptance rate with 10–15 students selected from 100+ applicants per semester</li>
+                </ul>
+                <div class="org-dot"></div>
+                <div class="org-step-body">
+                  <p class="org-step-date">Fall 2026</p>
+                  <p class="org-step-title">Consulting Director</p>
+                </div>
+                <p class="tl-hint">Click to expand ↗</p>
+              </div>
+
+            </div><!-- /org-timeline -->
+          </div>
+
+          <div class="edu-divider"></div>
+
+          <!-- EDIT: Relevant Coursework — add or remove .edu-item entries -->
+          <div class="edu-block">
+            <p class="edu-section-title">Relevant Coursework</p>
+            <div class="edu-items">
+              <div class="edu-item">Course Name Here</div>         <!-- EDIT -->
+              <div class="edu-item">Course Name Here</div>         <!-- EDIT -->
+              <div class="edu-item">Course Name Here</div>         <!-- EDIT -->
+              <div class="edu-item">Course Name Here</div>         <!-- EDIT -->
+            </div>
+          </div>
+
         </div>
 
       </div><!-- /exp-grid -->
@@ -771,10 +1117,8 @@
         <div>
           <p class="label">My Work</p>
           <!-- EDIT: Projects section heading -->
-          <h2 class="section-title">Selected Projects</h2>
+          <h2 class="section-title">Projects</h2>
         </div>
-        <!-- EDIT: "View All" link — remove anchor if not needed -->
-        <a href="#" class="btn btn-outline" style="font-size:0.83rem;padding:8px 18px;">View All ↗</a>
       </div>
 
       <div class="proj-grid">
@@ -998,6 +1342,21 @@
 
 
   <!-- ============================================================
+       ROLE MODAL — populated dynamically by JS, do not edit directly
+       ============================================================ -->
+  <div class="role-overlay" id="roleOverlay" onclick="handleOverlayClick(event)">
+    <div class="role-modal" id="roleModal">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <p class="modal-date" id="modalDate"></p>
+      <h2 class="modal-role" id="modalRole"></h2>
+      <p class="modal-company" id="modalCompany"></p>
+      <div class="modal-divider"></div>
+      <ul class="modal-bullets" id="modalBullets"></ul>
+    </div>
+  </div>
+
+
+  <!-- ============================================================
        FOOTER
        Edit copyright and closing phrase below
        ============================================================ -->
@@ -1043,11 +1402,9 @@
     const navLinks  = document.querySelectorAll('.nav-links a');
     const spyScroll = () => {
       const y = window.scrollY + 90;
-      sections.forEach(s => {
-        if (y >= s.offsetTop && y < s.offsetTop + s.offsetHeight) {
-          navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === `#${s.id}`));
-        }
-      });
+      let active = null;
+      sections.forEach(s => { if (y >= s.offsetTop) active = s; });
+      if (active) navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === `#${active.id}`));
     };
     window.addEventListener('scroll', spyScroll, { passive: true });
 
@@ -1056,6 +1413,25 @@
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('show'); io.unobserve(e.target); } });
     }, { threshold: 0.1 });
     document.querySelectorAll('.fi').forEach(el => io.observe(el));
+
+    // ── Role modal ───────────────────────────────────────────────
+    function openRole(el) {
+      const overlay = document.getElementById('roleOverlay');
+      document.getElementById('modalDate').textContent    = el.querySelector('.tl-date').textContent;
+      document.getElementById('modalRole').textContent    = el.querySelector('.tl-role').textContent;
+      document.getElementById('modalCompany').textContent = el.querySelector('.tl-company').textContent;
+      document.getElementById('modalBullets').innerHTML   = el.querySelector('.tl-full').innerHTML;
+      overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal() {
+      document.getElementById('roleOverlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    function handleOverlayClick(e) {
+      if (e.target === document.getElementById('roleOverlay')) closeModal();
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
     // ── Contact form ─────────────────────────────────────────────
     // EDIT: Replace this stub with Formspree, EmailJS, or your backend
