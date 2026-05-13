@@ -315,16 +315,21 @@
     }
     .stat-l { font-size: 0.76rem; font-weight: 500; color: var(--muted); }
 
-    /* Why Choose Me card */
-    .why-card {
+    /* Shared card style — Fun Facts, Why Choose Me, Leadership Highlights */
+    .info-card {
       background: var(--surface-2);
       border: 1px solid var(--accent-border);
       border-radius: var(--radius);
       padding: 20px 22px;
-      margin-top: 24px;
-      transition: border-color 0.25s var(--ease);
+      margin-top: 16px;
+      transition: border-color 0.25s var(--ease), transform 0.22s var(--ease);
     }
-    .why-card:hover { border-color: var(--accent); }
+    .info-card:hover { border-color: var(--accent); transform: scale(1.01); }
+    .info-card .facts-title { color: var(--accent); }
+    .info-card .fact { color: var(--text); }
+    /* keep why-card as alias so existing HTML still works */
+    .why-card { background: var(--surface-2); border: 1px solid var(--accent-border); border-radius: var(--radius); padding: 20px 22px; margin-top: 16px; transition: border-color 0.25s var(--ease), transform 0.22s var(--ease); }
+    .why-card:hover { border-color: var(--accent); transform: scale(1.01); }
     .why-card .facts-title { color: var(--accent); }
     .why-card .fact { color: var(--text); }
 
@@ -863,20 +868,31 @@
             </div>
           </div>
 
-          <!-- EDIT: Quick facts — add or remove .fact items freely -->
-          <p class="facts-title">Quick Facts</p>
-          <div class="fact">Former CS major turned FinTech builder</div>
-          <div class="fact">Co-founded a non-profit and raised $50K in 6 weeks</div>
-          <div class="fact">5-figure returns in crypto and stocks through funded trading</div>
-          <div class="fact">Co-lead a competitive consulting org delivering pro-bono work to non-profits</div>
+          <!-- EDIT: Fun Facts card -->
+          <div class="info-card" style="margin-top:0;">
+            <p class="facts-title">Fun Facts</p>
+            <div class="fact">Former CS major turned FinTech builder</div>
+            <div class="fact">Co-founded a non-profit and raised $50K in 6 weeks</div>
+            <div class="fact">5-figure returns in crypto and stocks through funded trading</div>
+            <div class="fact">Taught 200+ kids to code before ever taking a college class</div>
+          </div>
 
-          <!-- EDIT: "Why Choose Me" card — add or remove .fact items freely -->
+          <!-- EDIT: Why Choose Me card -->
           <div class="why-card">
             <p class="facts-title">Why Choose Me</p>
-            <div class="fact">End-to-end product ownership</div>
+            <div class="fact">End-to-end product ownership — discovery to launch</div>
             <div class="fact">Technical fluency with business translation</div>
             <div class="fact">Metrics-driven mindset</div>
             <div class="fact">Stakeholder management at scale</div>
+          </div>
+
+          <!-- EDIT: Leadership Highlights card -->
+          <div class="info-card">
+            <p class="facts-title">Leadership Highlights</p>
+            <div class="fact">Promoted to Campus Manager at iCode — managed 5+ instructors and 5+ concurrent classes</div>
+            <div class="fact">Consulting Director at 180 Degrees — trains analysts, reviews all client work, drives placement</div>
+            <div class="fact">Led cross-functional delivery across engineering, audit, and stakeholder teams at EY</div>
+            <div class="fact">Co-founded and scaled a non-profit to $50K in 6 weeks</div>
           </div>
         </div>
 
@@ -969,6 +985,62 @@
             <ul class="tl-full">
               <li>Built a 6-category AI risk taxonomy from literature review and expert interviews, adopted by NRG as the scoring framework for client risk assessments and forecasting models</li>
               <li>Presented AI risk findings directly to NRG's SVP and Research Director, with recommendations shaping the firm's risk mitigation framework delivered to enterprise clients</li>
+            </ul>
+            <p class="tl-hint">Click to expand ↗</p>
+          </div>
+
+          <!-- ── ROLE 5 — iCode School ── -->
+          <div class="tl-item fi d5" onclick="openRole(this)">
+            <div class="tl-dot"></div>
+            <p class="tl-date">Jun 2022 — Aug 2024</p>
+            <p class="tl-role">Senior Instructor → Campus Manager</p>
+            <p class="tl-company">iCode School · Sugar Land, TX</p>
+            <ul class="tl-desc tl-short">
+              <li>Created and taught STEM coding curriculum for kids ages 5–13</li>
+              <li>Promoted to Campus Manager — managed 5+ instructors and 5+ simultaneous classes</li>
+              <li>Secured school district partnerships to expand enrollment pipeline</li>
+            </ul>
+            <ul class="tl-full">
+              <li>Created and delivered hands-on STEM coding curriculum (CAD design, game design, robotics, web dev, app dev) for kids ages 5–13 in classes of up to 10 students</li>
+              <li>Promoted to Campus Manager after demonstrating consistent instructional quality and strong classroom management across 2+ years as Senior Instructor</li>
+              <li>Managed 5+ simultaneous classes and 5+ instructors — coordinating scheduling, lesson quality reviews, and staff development on a daily basis</li>
+              <li>Secured partnerships with local school districts to expand iCode's student pipeline and community reach</li>
+              <li>Drove improvements in parent satisfaction that directly translated into increased enrollment and retention across the campus</li>
+            </ul>
+            <p class="tl-hint">Click to expand ↗</p>
+          </div>
+
+          <!-- ── ROLE 6 — UT Austin Apprenticeship ── -->
+          <div class="tl-item fi d5" onclick="openRole(this)">
+            <div class="tl-dot"></div>
+            <p class="tl-date">Jul 2022</p>
+            <p class="tl-role">Software Engineering Apprentice</p>
+            <p class="tl-company">The University of Texas at Austin · Austin, TX</p>
+            <ul class="tl-desc tl-short">
+              <li>Built iOS apps in Swift through UT Austin's x-code development apprenticeship</li>
+            </ul>
+            <ul class="tl-full">
+              <li>Participated in William Bulkos' one-month iOS development apprenticeship program at UT Austin</li>
+              <li>Learned Swift fundamentals and applied them to build functional iOS apps from scratch using Xcode</li>
+              <li>Gained hands-on experience with MVC architecture, UI layout, and mobile app deployment workflows</li>
+            </ul>
+            <p class="tl-hint">Click to expand ↗</p>
+          </div>
+
+          <!-- ── ROLE 7 — QED ── -->
+          <div class="tl-item fi d5" onclick="openRole(this)">
+            <div class="tl-dot"></div>
+            <p class="tl-date">May 2021 — Aug 2021</p>
+            <p class="tl-role">Software Engineering Intern</p>
+            <p class="tl-company">QED · Sugar Land, TX</p>
+            <ul class="tl-desc tl-short">
+              <li>Selected from 148 high school students as 1 of 10 for a competitive engineering internship</li>
+              <li>Analyzed and optimized proprietary oil saturation simulation software</li>
+            </ul>
+            <ul class="tl-full">
+              <li>Selected from 148 high school applicants to be 1 of 10 participants in QED's competitive software engineering internship program</li>
+              <li>Analyzed performance and logic issues in QED's proprietary oil saturation simulation software used in industry client workflows</li>
+              <li>Built optimization demos identifying key bottlenecks and presented workflow improvement recommendations to senior engineers</li>
             </ul>
             <p class="tl-hint">Click to expand ↗</p>
           </div>
@@ -1091,10 +1163,17 @@
           <div class="edu-block">
             <p class="edu-section-title">Relevant Coursework</p>
             <div class="edu-items">
-              <div class="edu-item">Course Name Here</div>         <!-- EDIT -->
-              <div class="edu-item">Course Name Here</div>         <!-- EDIT -->
-              <div class="edu-item">Course Name Here</div>         <!-- EDIT -->
-              <div class="edu-item">Course Name Here</div>         <!-- EDIT -->
+              <div class="edu-item">FIN 4322 · Financial Technology</div>
+              <div class="edu-item">FIN 4346 · Applied ML in Finance &amp; Insurance</div>
+              <div class="edu-item">FIN 4345 · Financial Information &amp; Analysis</div>
+              <div class="edu-item">FIN 3390 · Financial Modeling</div>
+              <div class="edu-item">BUAN 3301 · Business in AI</div>
+              <div class="edu-item">STAT 3360 · Statistics</div>
+              <div class="edu-item">ITSS 4300 · Database Fundamentals</div>
+              <div class="edu-item">ITSS 3310 · Information Technology for Business</div>
+              <div class="edu-item">ITSS 3311 / 3312 · Object Oriented Programming</div>
+              <div class="edu-item">CS 1337 / 2337 · Computer Science I &amp; II</div>
+              <div class="edu-item">CS 2305 · Discrete Math Theory</div>
             </div>
           </div>
 
@@ -1298,10 +1377,10 @@
 
           <!-- EDIT: Social links — replace href="#" with real URLs -->
           <div class="socials">
-            <a href="#" class="soc-btn" target="_blank" rel="noopener">  <!-- EDIT: LinkedIn URL -->
+            <a href="https://www.linkedin.com/in/hudaifa-r" class="soc-btn" target="_blank" rel="noopener">
               LinkedIn ↗
             </a>
-            <a href="#" class="soc-btn" target="_blank" rel="noopener">  <!-- EDIT: GitHub URL -->
+            <a href="https://github.com/hudaifa-9805" class="soc-btn" target="_blank" rel="noopener">
               GitHub ↗
             </a>
             <!-- EDIT: Uncomment and fill in to add Resume PDF link -->
