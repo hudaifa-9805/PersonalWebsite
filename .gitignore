@@ -1,0 +1,11 @@
+.DS_Store
+.claude/
+.claude-flow/
+.swarm/
+.mcp.json
+CLAUDE.md
+ruvector.db
+*.db
+*.db-shm
+*.db-wal
+node_modules/

@@ -393,6 +393,11 @@
     }
     .card-link:hover { gap: 10px; }
     .card-link::after { content: '→'; }
+    .card-link-soon {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 0.83rem; font-weight: 600;
+      color: var(--muted); opacity: 0.45; cursor: default; user-select: none;
+    }
 
     /* ============================================================
        SKILLS SECTION
@@ -424,7 +429,7 @@
     #experience { padding: 96px 0; }
     .exp-grid {
       display: grid; grid-template-columns: 1fr 420px;
-      gap: 48px; align-items: stretch; margin-top: 52px;
+      gap: 48px; align-items: start; margin-top: 52px;
     }
     .timeline { position: relative; }
     .timeline::before {
@@ -607,7 +612,7 @@
     .org-step:last-child { margin-bottom: 0; }
     .org-step:hover { background: rgba(88,166,255,0.07); }
     .org-dot {
-      position: absolute; left: -18px; top: 14px;
+      position: absolute; left: -22px; top: 14px;
       width: 9px; height: 9px; border-radius: 50%;
       background: var(--border); border: 2px solid var(--surface-2);
       transition: background 0.2s;
@@ -1202,62 +1207,74 @@
 
       <div class="proj-grid">
 
-        <!-- ── PROJECT 1 ── EDIT: All fields below ── -->
-        <div class="card fi d1">
+        <!-- ── PROJECT 1 — Comet AI ── -->
+        <div class="card fi d1" onclick="openRole(this)" style="cursor:pointer;">
+          <!-- hidden modal data -->
+          <p class="tl-date" style="display:none">2024 — In Progress</p>
+          <p class="tl-role" style="display:none">Comet AI</p>
+          <p class="tl-company" style="display:none">Personal AI chatbot tailored to your university</p>
+          <ul class="tl-full">
+            <li>Initially built for the University of Houston — lets students ask anything about their school, search professor reviews, build mock schedules, and calculate GPA, all in one AI-powered chat interface</li>
+            <li>Entered into Headstarter AI's product competition and placed <strong>3rd out of 208 teams</strong> in the program cohort</li>
+            <li>Currently being reworked for The University of Texas at Dallas with expanded features and a school-specific knowledge base</li>
+            <li>Upcoming additions: degree audit integration, financial aid Q&amp;A, and multi-school support</li>
+          </ul>
           <div class="card-body">
-            <h3 class="card-title">Project Name Here</h3>     <!-- EDIT: Project title -->
-            <!-- EDIT: 1-2 sentence description -->
-            <p class="card-desc">Short description of what this project is, the problem it solves, and your role in building or shipping it.</p>
+            <h3 class="card-title">Comet AI</h3>
+            <p class="card-desc">Personal AI chatbot tailored to your university — search professor reviews, build mock schedules, calculate GPA, and get answers to anything school-related. Placed <strong style="color:var(--text)">3rd of 208</strong> at Headstarter AI. Being reworked for UT Dallas.</p>
             <div class="tags">
-              <!-- EDIT: Add or remove <span class="tag"> items -->
+              <span class="tag">LLM / RAG</span>
+              <span class="tag">Product Management</span>
+              <span class="tag">Next.js</span>
+            </div>
+            <span class="card-link-soon">Link Coming Soon</span>
+            <p class="tl-hint" style="margin-top:10px; opacity:0.5; font-size:0.72rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--accent);">Click to learn more ↗</p>
+          </div>
+        </div>
+
+        <!-- ── PROJECT 2 — SpendMax ── -->
+        <div class="card fi d2" onclick="openRole(this)" style="cursor:pointer;">
+          <p class="tl-date" style="display:none">2025 — In Progress</p>
+          <p class="tl-role" style="display:none">SpendMax</p>
+          <p class="tl-company" style="display:none">Credit card optimizer &amp; smart spending tracker</p>
+          <ul class="tl-full">
+            <li>Built a rules-based credit card rewards optimizer mapping transaction categories to issuer reward structures — achieved a <strong>25% uplift</strong> in projected annual rewards value per user</li>
+            <li>Designed an expense-sharing MVP for college groups and roommates, driving a <strong>40% reduction</strong> in unresolved balances measured by settlement rate</li>
+            <li>v3 in development: Stripe-powered wallet for seamless multi-card management and a card search engine that matches users with the best card for their specific spending profile</li>
+          </ul>
+          <div class="card-body">
+            <h3 class="card-title">SpendMax</h3>
+            <p class="card-desc">Credit card rewards optimizer and expense tracker. Built a rules engine achieving a <strong style="color:var(--text)">25% uplift</strong> in rewards value. v3 adds a Stripe wallet and card search engine.</p>
+            <div class="tags">
               <span class="tag">FinTech</span>
-              <span class="tag">Product</span>
-              <span class="tag">Python</span>
-            </div>
-            <!-- EDIT: Replace "#" with live URL or GitHub repo -->
-            <a href="#" class="card-link">View Project</a>
-          </div>
-        </div>
-
-        <!-- ── PROJECT 2 ── EDIT: All fields below ── -->
-        <div class="card fi d2">
-          <div class="card-body">
-            <h3 class="card-title">Project Name Here</h3>
-            <p class="card-desc">Short description of what this project is, the problem it solves, and your role in building or shipping it.</p>
-            <div class="tags">
-              <span class="tag">AI</span>
+              <span class="tag">Stripe / Payments</span>
               <span class="tag">React</span>
-              <span class="tag">API</span>
             </div>
-            <a href="#" class="card-link">View Project</a>
+            <a href="https://spendmax.vercel.app/" class="card-link" target="_blank" rel="noopener" onclick="event.stopPropagation()">View Project</a>
+            <p class="tl-hint" style="margin-top:10px; opacity:0.5; font-size:0.72rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--accent);">Click to learn more ↗</p>
           </div>
         </div>
 
-        <!-- ── PROJECT 3 ── EDIT: All fields below ── -->
-        <div class="card fi d3">
+        <!-- ── PROJECT 3 — ForgeAI ── -->
+        <div class="card fi d3" onclick="openRole(this)" style="cursor:pointer;">
+          <p class="tl-date" style="display:none">2024 — Revamp in Progress</p>
+          <p class="tl-role" style="display:none">ForgeAI</p>
+          <p class="tl-company" style="display:none">AI-powered fitness tracker</p>
+          <ul class="tl-full">
+            <li>Built an AI-powered fitness tracker that lets users set and customize goals via chatbot, with unified tracking across workouts, meals, and sleep in one place</li>
+            <li>Grew to <strong>5,000+ signups</strong> organically — validated product-market fit with no paid acquisition</li>
+            <li>Currently being fully revamped using Ruflow, a Claude Code skill that runs 60+ AI agents in parallel, to accelerate feature development and rebuild the AI coaching engine at scale</li>
+          </ul>
           <div class="card-body">
-            <h3 class="card-title">Project Name Here</h3>
-            <p class="card-desc">Short description of what this project is, the problem it solves, and your role in building or shipping it.</p>
+            <h3 class="card-title">ForgeAI</h3>
+            <p class="card-desc">AI-powered fitness tracker with <strong style="color:var(--text)">5,000+ signups</strong>. AI chatbot sets and tracks goals across workouts, meals, and sleep. Currently being revamped with 60+ parallel AI agents.</p>
             <div class="tags">
-              <span class="tag">Consulting</span>
-              <span class="tag">Analytics</span>
-              <span class="tag">SQL</span>
+              <span class="tag">AI Chatbot</span>
+              <span class="tag">Health Tech</span>
+              <span class="tag">Node.js</span>
             </div>
-            <a href="#" class="card-link">View Project</a>
-          </div>
-        </div>
-
-        <!-- ── PROJECT 4 ── EDIT: All fields below ── -->
-        <div class="card fi d4">
-          <div class="card-body">
-            <h3 class="card-title">Project Name Here</h3>
-            <p class="card-desc">Short description of what this project is, the problem it solves, and your role in building or shipping it.</p>
-            <div class="tags">
-              <span class="tag">Payments</span>
-              <span class="tag">UX</span>
-              <span class="tag">Figma</span>
-            </div>
-            <a href="#" class="card-link">View Project</a>
+            <span class="card-link-soon">Revamp in Progress</span>
+            <p class="tl-hint" style="margin-top:10px; opacity:0.5; font-size:0.72rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--accent);">Click to learn more ↗</p>
           </div>
         </div>
 
@@ -1283,53 +1300,51 @@
       <div class="skills-grid">
 
         <div class="fi d1">
-          <!-- EDIT: Group heading -->
-          <p class="group-title">Product &amp; Strategy</p>
+          <p class="group-title">Product Management</p>
           <div class="pills">
-            <!-- EDIT: Add / remove pills freely -->
-            <span class="pill">Product Management</span>
             <span class="pill">PRD Writing</span>
             <span class="pill">Roadmapping</span>
-            <span class="pill">Stakeholder Alignment</span>
             <span class="pill">Backlog Management</span>
+            <span class="pill">Sprint Planning</span>
             <span class="pill">User Research</span>
             <span class="pill">Success Metrics</span>
             <span class="pill">Go-to-Market</span>
+            <span class="pill">Risk Prioritization</span>
           </div>
 
-          <!-- EDIT: Group heading -->
-          <p class="group-title">Finance &amp; Analytics</p>
+          <p class="group-title">Consulting &amp; Strategy</p>
           <div class="pills">
-            <span class="pill">Financial Modeling</span>
-            <span class="pill">Excel / Sheets</span>
-            <span class="pill">SQL</span>
-            <span class="pill">Power BI</span>
-            <span class="pill">Data Analysis</span>
-            <span class="pill">FinTech Strategy</span>
+            <span class="pill">Stakeholder Alignment</span>
+            <span class="pill">Process Documentation</span>
+            <span class="pill">SOX / Compliance</span>
+            <span class="pill">Risk Assessment</span>
+            <span class="pill">Client Deliverables</span>
+            <span class="pill">Executive Presentations</span>
           </div>
         </div>
 
         <div class="fi d2">
-          <!-- EDIT: Group heading -->
-          <p class="group-title">Technical</p>
+          <p class="group-title">Finance &amp; Data</p>
+          <div class="pills">
+            <span class="pill">Financial Modeling</span>
+            <span class="pill">Excel / Sheets</span>
+            <span class="pill">Tableau</span>
+            <span class="pill">Power BI</span>
+            <span class="pill">SQL</span>
+            <span class="pill">FinTech Strategy</span>
+            <span class="pill">Data Analysis</span>
+          </div>
+
+          <p class="group-title">Technical &amp; Tools</p>
           <div class="pills">
             <span class="pill">Python</span>
             <span class="pill">JavaScript</span>
-            <span class="pill">React</span>
-            <span class="pill">REST APIs</span>
-            <span class="pill">Git / GitHub</span>
-            <span class="pill">HTML / CSS</span>
-          </div>
-
-          <!-- EDIT: Group heading -->
-          <p class="group-title">Tools &amp; Workflows</p>
-          <div class="pills">
+            <span class="pill">Java</span>
+            <span class="pill">AWS</span>
+            <span class="pill">Snowflake</span>
             <span class="pill">Jira</span>
+            <span class="pill">GitHub</span>
             <span class="pill">Figma</span>
-            <span class="pill">Notion</span>
-            <span class="pill">Confluence</span>
-            <span class="pill">Linear</span>
-            <span class="pill">Slack</span>
           </div>
         </div>
 
